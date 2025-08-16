@@ -1,13 +1,12 @@
-function App (){
-  return (
-    
-    <div>
-      <h1 class="text-3xl font-bold underline">
-    Hello world!
-  </h1>
-    </div>
-    
-  )
-}
+import React from 'react';
+import HomePage from './pages/HomePage.jsx';
 
-export default  App
+const App = () => {
+  return (
+    <>
+      <HomePage />
+    </>
+  );
+};
+
+export default App;
