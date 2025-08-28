@@ -25,7 +25,6 @@ const schema = z
     neighborhood: z.string().min(2, "Bairro obrigatório"),
     password: z.string().min(6, "A senha deve ter pelo menos 6 caracteres"),
     confirmPassword: z.string(),
-    schoolName: z.string().min(2, "Escola obrigatória"),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "As senhas não coincidem",
@@ -152,7 +151,7 @@ const SignUpForm = () => {
         />
       </div>
 
-      {/* Senha e ConfirmaÃ§Ã£o */}
+      {/* Senha e Confirmação */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-16 w-full p-2">
         <FormField
           id="password"
@@ -172,20 +171,9 @@ const SignUpForm = () => {
         />
       </div>
 
-      {/* Escola */}
-      <div className="grid grid-cols-1  w-full p-2">
-        <FormField
-          id="schoolName"
-          label="Escola:"
-          placeholder="Nome da Escola"
-          register={register}
-          errors={errors}
-        />
-      </div>
-
       {/* Botão */}
       <div className="px-2">
-        <button className=" mb-4 w-full p-3  text-sm sm:text-base text-white font-semibold transition duration-200 hover:bg-green-700 bg-green-500 rounded-md">
+        <button className="mt-4 mb-8 w-full p-3  text-sm sm:text-base text-white font-semibold transition duration-200 hover:bg-green-700 bg-green-500 rounded-md">
           Continuar
         </button>
       </div>

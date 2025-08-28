@@ -5,36 +5,34 @@ import { z } from "zod";
 
 import FormField from "./FormField";
 import SelectField from "./SelectField";
-import DateField from "./DateField";
 
 const schema = z
   .object({
-    fullName: z.string().min(3, "Nome completo obrigatório"),
-    socialName: z.string().optional(),
-    email: z.string().email("Email inválido"),
-    confirmEmail: z.string(),
-    dateOfBirth: z
-      .string({
-        required_error: "Data de nascimento obrigatório",
-        invalid_type_error: "Data inválida",
-      })
-      .min(1, "Campo obrigatório")
-      .regex(/^\d{2}\/\d{2}\/\d{4}$/, "Data inválida (DD/MM/AAAA)"),
+    schoolName: z.string().min(3, "Campo obrigatório"),
+    schoolType: z.string().min(2, "Selecione uma categoria"),
     state: z.string().min(2, "Selecione um estado"),
     city: z.string().min(2, "Cidade obrigatória"),
     neighborhood: z.string().min(2, "Bairro obrigatório"),
+    email: z.string().email("Email inválido"),
+    confirmEmail: z.string(),
     password: z.string().min(6, "A senha deve ter pelo menos 6 caracteres"),
     confirmPassword: z.string(),
-    schoolName: z.string().min(2, "Escola obrigatória"),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "As senhas não coincidem",
     path: ["confirmPassword"],
   })
   .refine((data) => data.email === data.confirmEmail, {
-    message: "Os Emails não coincidem",
+    message: "Os emails não coincidem",
     path: ["confirmEmail"],
   });
+
+const schoolTypes = [
+  { value: "municipal", label: "Municipal" },
+  { value: "estadual", label: "Estadual" },
+  { value: "federal", label: "Federal" },
+  { value: "privada", label: "Privada" },
+];
 
 const brazilianStates = [
   { value: "AC", label: "Acre (AC)" },
@@ -66,15 +64,13 @@ const brazilianStates = [
   { value: "TO", label: "Tocantins (TO)" },
 ];
 
-const SignUpForm = () => {
+const SignUpFormSchool = () => {
   const {
     register,
-    control,
     handleSubmit,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(schema),
-    defaultValues: { dateOfBirth: "" },
   });
   const onSubmit = (data) => {
     console.log("Form submitted:", data); // Enviar a data pro backend, console.log só pra ver a data no desenvolvimento
@@ -84,47 +80,26 @@ const SignUpForm = () => {
     <form
       className="flex flex-col mx-auto w-full max-w-3xl gap-4"
       onSubmit={handleSubmit(onSubmit)}>
-      {/* Nome Completo e Nome Social */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-16 w-full p-2">
+      {/* Escola */}
+      <div className="grid grid-cols-1 gap-6 sm:gap-16 w-full p-2">
         <FormField
-          id="fullName"
-          label="Nome Completo:"
-          placeholder="Nome completo"
-          register={register}
-          errors={errors}
-        />
-        <FormField
-          id="socialName"
-          label="Nome Social:"
-          placeholder="Nome social"
+          id="schoolName"
+          label="Instituição:"
+          placeholder="Nome da Instituição"
           register={register}
           errors={errors}
         />
       </div>
 
-      {/* Email e Confirma email */}
+      {/* Tipo e Estado */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-16 w-full p-2">
-        <FormField
-          id="email"
-          label="Email:"
-          placeholder="Seu e-mail"
-          type="email"
+        <SelectField
+          id="schoolType"
+          label="Tipo:"
+          options={schoolTypes}
           register={register}
           errors={errors}
         />
-        <FormField
-          id="confirmEmail"
-          label="Confirmar email:"
-          placeholder="Confirme seu e-mail"
-          type="email"
-          register={register}
-          errors={errors}
-        />
-      </div>
-
-      {/* Data de nascimento e Estado */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-16 w-full p-2">
-        <DateField control={control} errors={errors} />
         <SelectField
           id="state"
           label="Estado:"
@@ -133,8 +108,7 @@ const SignUpForm = () => {
           errors={errors}
         />
       </div>
-
-      {/* Cidade e bairro */}
+      {/* Cidade e Bairro */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-16 w-full p-2">
         <FormField
           id="city"
@@ -152,7 +126,27 @@ const SignUpForm = () => {
         />
       </div>
 
-      {/* Senha e ConfirmaÃ§Ã£o */}
+      {/* Email e Data de Nascimento */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-16 w-full p-2">
+        <FormField
+          id="email"
+          label="Email:"
+          placeholder="Seu e-mail"
+          type="email"
+          register={register}
+          errors={errors}
+        />
+        <FormField
+          id="confirmEmail"
+          label="Confirme seu e-mail:"
+          placeholder="Confirme seu e-mail"
+          type="email"
+          register={register}
+          errors={errors}
+        />
+      </div>
+
+      {/* Senha e Confirmação */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-16 w-full p-2">
         <FormField
           id="password"
@@ -172,20 +166,9 @@ const SignUpForm = () => {
         />
       </div>
 
-      {/* Escola */}
-      <div className="grid grid-cols-1  w-full p-2">
-        <FormField
-          id="schoolName"
-          label="Escola:"
-          placeholder="Nome da Escola"
-          register={register}
-          errors={errors}
-        />
-      </div>
-
       {/* Botão */}
       <div className="px-2">
-        <button className=" mb-4 w-full p-3  text-sm sm:text-base text-white font-semibold transition duration-200 hover:bg-green-700 bg-green-500 rounded-md">
+        <button className="mt-4 mb-8 w-full p-3  text-sm sm:text-base text-white font-semibold transition duration-200 hover:bg-green-700 bg-green-500 rounded-md">
           Continuar
         </button>
       </div>
@@ -193,4 +176,4 @@ const SignUpForm = () => {
   );
 };
 
-export default SignUpForm;
+export default SignUpFormSchool;

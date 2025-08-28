@@ -3,7 +3,7 @@ import SelectField from "../components/signup/SelectField";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const schema = z.object({
   userType: z.string().min(1, "Selecione um tipo de usuário"),
@@ -11,11 +11,12 @@ const schema = z.object({
 
 const userTypes = [
   { value: "aluno", label: "Aluno" },
-  { value: "escola", label: "Admin" },
-  { value: "admin", label: "Escola" },
+  { value: "escola", label: "Escola" },
+  { value: "admin", label: "Admin" },
 ];
 
 const SignUpPage = () => {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -26,6 +27,19 @@ const SignUpPage = () => {
 
   const onSubmit = (data) => {
     console.log("Form submitted:", data); // Enviar a data pro backend, console.log só pra ver a data no desenvolvimento
+    switch (data.userType) {
+      case "aluno":
+        navigate("/signup-user");
+        break;
+      case "escola":
+        navigate("/signup-school");
+        break;
+      case "admin":
+        navigate("/signup-admin");
+        break;
+      default:
+        console.error("Invalid type selected");
+    }
   };
 
   return (
@@ -45,13 +59,11 @@ const SignUpPage = () => {
             />
 
             {/* Botão */}
-            <NavLink to="/signup-user">
             <button
               type="submit"
               className="mt-4 mb-8 w-full p-3 text-sm sm:text-base text-white font-semibold transition duration-200 hover:bg-green-700 bg-green-500 rounded-md">
               Criar Conta
-              </button>
-            </NavLink>
+            </button>
           </form>
         </div>
       </section>
