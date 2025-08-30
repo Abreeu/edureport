@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom"
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -173,11 +174,23 @@ const SignUpForm = () => {
 
       {/* Botão */}
       <div className="px-2">
-        <button className="mt-4 mb-8 w-full p-3  text-sm sm:text-base text-white font-semibold transition duration-200 hover:bg-green-700 bg-green-500 rounded-md">
-          Continuar
-        </button>
+        <NavLink to='/adminprofile'>
+          {/* state={{
+            fullName: watch('fullName'),
+            socialName: watch('socialName'),
+            email: watch('email'),
+            birthDate: watch('birthDate'),
+            state: watch('state'),
+            city: watch('city'),
+            neighborhood: watch('neighborhood'),
+          }} */}
+          <button className="mt-4 mb-8 w-full p-3  text-sm sm:text-base text-white font-semibold transition duration-200 hover:bg-green-700 bg-green-500 rounded-md">
+            Continuar
+          </button>
+        </NavLink>
       </div>
     </form>
+
   );
 };
 
