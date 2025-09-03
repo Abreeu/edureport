@@ -1,18 +1,19 @@
-import React from "react"
-import HomePage from "./pages/HomePage.jsx"
-import Navbar from "./components/Navbar.jsx"
-import SignUpPage from "./pages/SignUpPage.jsx"
-import SignUpUser from "./pages/SignUpUser.jsx"
-import SignUpSchool from "./pages/SignUpSchool.jsx"
-import SignUpAdmin from "./pages/SignUpAdmin.jsx"
-import LoginPage from "./pages/LoginPage.jsx"
-import SeePublicComplaints from "./pages/SeePublicComplaints.jsx"
-import HowItWorksPage from "./pages/HowItWorksPage.jsx"
-import AdminProfile from "./pages/AdminProfile.jsx"
-import SchoolProfile from "./pages/SchoolProfile.jsx"
-import StudentProfile from "./pages/StudentProfile.jsx"
+import React from "react";
+import HomePage from "./pages/HomePage.jsx";
+import Navbar from "./components/Navbar.jsx";
+import SignUpPage from "./pages/SignUpPage.jsx";
+import SignUpUser from "./pages/SignUpUser.jsx";
+import SignUpSchool from "./pages/SignUpSchool.jsx";
+import SignUpAdmin from "./pages/SignUpAdmin.jsx";
+import LoginPage from "./pages/LoginPage.jsx";
+import SeePublicComplaints from "./pages/SeePublicComplaints.jsx";
+import HowItWorksPage from "./pages/HowItWorksPage.jsx";
+import AdminProfile from "./pages/AdminProfile.jsx";
+import SchoolProfile from "./pages/SchoolProfile.jsx";
+import StudentProfile from "./pages/StudentProfile.jsx";
+import ComplaintRegister from "./pages/ComplaintRegister.jsx";
 
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 const App = () => {
   return (
@@ -34,10 +35,11 @@ const App = () => {
           <Route path="/adminprofile" element={<AdminProfile />} />
           <Route path="/schoolprofile" element={<SchoolProfile />} />
           <Route path="/studentprofile" element={<StudentProfile />} />
+          <Route path="complaintregister" element={<ComplaintRegister />} />
         </Routes>
       </Router>
     </>
-  )
-}
+  );
+};
 
-export default App
+export default App;

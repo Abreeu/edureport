@@ -1,8 +1,9 @@
-const HeroSection = () => {  
+import { NavLink } from "react-router-dom";
+const HeroSection = () => {
   // Define um componente funcional chamado HeroSection.
 
   return (
-    <header 
+    <header
       className="relative bg-gradient-to-r from-blue-600 to-blue-800 
                  text-stone py-24 md:py-32 text-center overflow-hidden">
       {/* 
@@ -41,7 +42,8 @@ const HeroSection = () => {
         */}
 
         <p className="text-lg md:text-xl max-w-2xl mx-auto mb-8 text-white">
-          Relate problemas, denuncie e acompanhe as respostas das autoridades de forma anônima e segura.
+          Relate problemas, denuncie e acompanhe as respostas das autoridades de
+          forma anônima e segura.
         </p>
         {/* 
           Parágrafo de apoio (subtítulo).
@@ -51,13 +53,14 @@ const HeroSection = () => {
           - mb-8: margem inferior (32px).
           - text-white: cor branca no texto.
         */}
-
-        <button 
-          className="bg-green-500 text-white font-bold py-3 px-8 rounded-full 
+        <NavLink to="/complaintregister">
+          <button
+            className="bg-green-500 text-white font-bold py-3 px-8 rounded-full 
                      text-lg shadow-xl hover:bg-green-600 transform hover:scale-105 
                      transition duration-300 ease-in-out cursor-pointer">
-          Denunciar um Problema
-        </button>
+            Denunciar um Problema
+          </button>
+        </NavLink>
         {/* 
           Botão de ação principal (CTA).
           - bg-green-500: fundo verde.
@@ -76,5 +79,5 @@ const HeroSection = () => {
   );
 };
 
-export default HeroSection; 
+export default HeroSection;
 // Exporta o componente para ser usado em outras partes da aplicação.
