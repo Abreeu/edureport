@@ -1,5 +1,4 @@
 import React from 'react';
-
 const HeroSection = () => {
   return (
     <header className="relative bg-gradient-to-r from-blue-600 to-blue-800 text-stone py-24 md:py-32 text-center overflow-hidden">
