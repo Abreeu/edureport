@@ -7,7 +7,12 @@ import SignUpSchool from "./pages/SignUpSchool.jsx";
 import SignUpAdmin from "./pages/SignUpAdmin.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
 import SeePublicComplaints from "./pages/SeePublicComplaints.jsx";
-import HowItWorksSection from "./components/HowItWorks.jsx";
+import HowItWorksPage from "./pages/HowItWorksPage.jsx";
+import AdminProfile from "./pages/AdminProfile.jsx";
+import SchoolProfile from "./pages/SchoolProfile.jsx";
+import StudentProfile from "./pages/StudentProfile.jsx";
+import ComplaintRegister from "./pages/ComplaintRegister.jsx";
+
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 const App = () => {
@@ -26,7 +31,11 @@ const App = () => {
             path="/seepubliccomplaints"
             element={<SeePublicComplaints />}
           />
-          <Route path="/howitworks" element={<HowItWorksSection />} />
+          <Route path="/howitworks" element={<HowItWorksPage />} />
+          <Route path="/adminprofile" element={<AdminProfile />} />
+          <Route path="/schoolprofile" element={<SchoolProfile />} />
+          <Route path="/studentprofile" element={<StudentProfile />} />
+          <Route path="complaintregister" element={<ComplaintRegister />} />
         </Routes>
       </Router>
     </>

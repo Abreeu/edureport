@@ -1,10 +1,9 @@
-import React from 'react';
 
-// Componente funcional da página de visualização de denúncias públicas
-const SeePublicComplaints = () => {
+// Componente funcional da página de perfil da escola
+const SchoolProfile = () => {
   return (
     <>
-      {/* Seção principal da página */}
+      {/* Seção principal */}
       <section className="pt-28 w-full max-w-3xl mx-auto">
         {/*
           - pt-28: padding top (espaço para a navbar fixa)
@@ -15,7 +14,7 @@ const SeePublicComplaints = () => {
 
         {/* Título da página */}
         <h1 className="flex justify-center mb-6 text-blue-600 text-3xl font-bold">
-          Ver Denúncias Públicas
+          Perfil da Escola
         </h1>
         {/*
           - flex justify-center: centraliza horizontalmente
@@ -26,7 +25,7 @@ const SeePublicComplaints = () => {
         */}
       </section>
     </>
-  );
+  )
 };
 
-export default SeePublicComplaints;
+export default SchoolProfile;

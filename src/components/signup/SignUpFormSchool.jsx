@@ -1,32 +1,45 @@
-import React from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
+import { NavLink } from "react-router-dom"; // Usado para criar links de navegação entre rotas no React Router
+import { useForm } from "react-hook-form"; // Biblioteca para lidar com formulários de forma reativa
+import { zodResolver } from "@hookform/resolvers/zod"; // Faz a ponte entre o React Hook Form e o Zod (para validação de schema)
+import { z } from "zod"; // Biblioteca de validação de dados
 
-import FormField from "./FormField";
-import SelectField from "./SelectField";
+import FormField from "./FormField"; // Componente de input customizado
+import SelectField from "./SelectField"; // Componente de select customizado
 
+// ✅ Definição do schema de validação usando Zod
 const schema = z
   .object({
+    // Nome da escola: obrigatório e com mínimo de 3 caracteres
     schoolName: z.string().min(3, "Campo obrigatório"),
+    // Tipo da escola: precisa ter pelo menos 2 caracteres (ex: "SP")
     schoolType: z.string().min(2, "Selecione uma categoria"),
+    // Estado: também precisa ter pelo menos 2 caracteres
     state: z.string().min(2, "Selecione um estado"),
+    // Cidade: obrigatória
     city: z.string().min(2, "Cidade obrigatória"),
+    // Bairro: obrigatório
     neighborhood: z.string().min(2, "Bairro obrigatório"),
+    // Email: deve ter formato válido
     email: z.string().email("Email inválido"),
+    // Confirmar Email: campo só declarado (validação feita depois)
     confirmEmail: z.string(),
+    // Senha: mínimo 6 caracteres
     password: z.string().min(6, "A senha deve ter pelo menos 6 caracteres"),
+    // Confirmar senha: só declarado (validação feita depois)
     confirmPassword: z.string(),
   })
+  // Validação extra: confirmar se as senhas são iguais
   .refine((data) => data.password === data.confirmPassword, {
     message: "As senhas não coincidem",
-    path: ["confirmPassword"],
+    path: ["confirmPassword"], // aponta para o campo que deve mostrar o erro
   })
+  // Validação extra: confirmar se os emails são iguais
   .refine((data) => data.email === data.confirmEmail, {
     message: "Os emails não coincidem",
-    path: ["confirmEmail"],
+    path: ["confirmEmail"], // aponta para o campo que deve mostrar o erro
   });
 
+// ✅ Lista de tipos de escola (opções do select)
 const schoolTypes = [
   { value: "municipal", label: "Municipal" },
   { value: "estadual", label: "Estadual" },
@@ -34,6 +47,7 @@ const schoolTypes = [
   { value: "privada", label: "Privada" },
 ];
 
+// ✅ Lista de estados do Brasil (usados no select)
 const brazilianStates = [
   { value: "AC", label: "Acre (AC)" },
   { value: "AL", label: "Alagoas (AL)" },
@@ -64,23 +78,29 @@ const brazilianStates = [
   { value: "TO", label: "Tocantins (TO)" },
 ];
 
+// ✅ Componente principal do formulário
 const SignUpFormSchool = () => {
+  // useForm inicializa o formulário com validação via Zod
   const {
-    register,
-    handleSubmit,
-    formState: { errors },
+    register, // registra os campos do form
+    handleSubmit, // função que processa o submit
+    formState: { errors }, // objeto que guarda os erros de validação
   } = useForm({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(schema), // conecta o formulário ao schema do Zod
   });
+
+  // Função que será chamada quando o form for enviado sem erros
   const onSubmit = (data) => {
-    console.log("Form submitted:", data); // Enviar a data pro backend, console.log só pra ver a data no desenvolvimento
+    console.log("Form submitted:", data); 
+    // 🚀 Aqui você poderia enviar os dados para o backend
   };
 
   return (
     <form
       className="flex flex-col mx-auto w-full max-w-3xl gap-4"
-      onSubmit={handleSubmit(onSubmit)}>
-      {/* Escola */}
+      onSubmit={handleSubmit(onSubmit)} // onSubmit do React Hook Form
+    >
+      {/* Campo: Nome da instituição */}
       <div className="grid grid-cols-1 gap-6 sm:gap-16 w-full p-2">
         <FormField
           id="schoolName"
@@ -91,7 +111,7 @@ const SignUpFormSchool = () => {
         />
       </div>
 
-      {/* Tipo e Estado */}
+      {/* Campos: Tipo da escola e Estado */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-16 w-full p-2">
         <SelectField
           id="schoolType"
@@ -108,7 +128,8 @@ const SignUpFormSchool = () => {
           errors={errors}
         />
       </div>
-      {/* Cidade e Bairro */}
+
+      {/* Campos: Cidade e Bairro */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-16 w-full p-2">
         <FormField
           id="city"
@@ -126,7 +147,7 @@ const SignUpFormSchool = () => {
         />
       </div>
 
-      {/* Email e Data de Nascimento */}
+      {/* Campos: Email e Confirmação de Email */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-16 w-full p-2">
         <FormField
           id="email"
@@ -146,7 +167,7 @@ const SignUpFormSchool = () => {
         />
       </div>
 
-      {/* Senha e Confirmação */}
+      {/* Campos: Senha e Confirmação de Senha */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-16 w-full p-2">
         <FormField
           id="password"
@@ -166,11 +187,15 @@ const SignUpFormSchool = () => {
         />
       </div>
 
-      {/* Botão */}
+      {/* Botão de continuar */}
       <div className="px-2">
-        <button className="mt-4 mb-8 w-full p-3  text-sm sm:text-base text-white font-semibold transition duration-200 hover:bg-green-700 bg-green-500 rounded-md">
-          Continuar
-        </button>
+        <NavLink to="/schoolprofile">
+          <button
+            className="mt-4 mb-8 w-full p-3 text-sm sm:text-base text-white font-semibold transition duration-200 hover:bg-green-700 bg-green-500 rounded-md"
+          >
+            Continuar
+          </button>
+        </NavLink>
       </div>
     </form>
   );

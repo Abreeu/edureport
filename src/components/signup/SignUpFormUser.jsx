@@ -1,41 +1,57 @@
-import React from "react";
+// Importa useForm do react-hook-form para controlar formulários
 import { useForm } from "react-hook-form";
+
+import { NavLink } from "react-router-dom"
+// Importa NavLink do react-router-dom para navegação entre páginas sem recarregar a página
+
+// Importa o zodResolver que integra o Zod com react-hook-form
 import { zodResolver } from "@hookform/resolvers/zod";
+
+// Importa o Zod para validação de esquema (schema validation)
 import { z } from "zod";
 
+// Importa os campos personalizados criados anteriormente
 import FormField from "./FormField";
 import SelectField from "./SelectField";
 import DateField from "./DateField";
 
+// ------------------------------
+// Definição do schema de validação com Zod
+// ------------------------------
 const schema = z
   .object({
-    fullName: z.string().min(3, "Nome completo obrigatório"),
-    socialName: z.string().optional(),
-    email: z.string().email("Email inválido"),
-    confirmEmail: z.string(),
+    fullName: z.string().min(3, "Nome completo obrigatório"), // Nome deve ter no mínimo 3 caracteres
+    socialName: z.string().optional(), // Nome social não é obrigatório
+    email: z.string().email("Email inválido"), // Deve ser um email válido
+    confirmEmail: z.string(), // Confirmação de email (validado depois com refine)
     dateOfBirth: z
       .string({
-        required_error: "Data de nascimento obrigatório",
-        invalid_type_error: "Data inválida",
+        required_error: "Data de nascimento obrigatório", // Caso não preencha
+        invalid_type_error: "Data inválida", // Caso o tipo seja incorreto
       })
-      .min(1, "Campo obrigatório")
-      .regex(/^\d{2}\/\d{2}\/\d{4}$/, "Data inválida (DD/MM/AAAA)"),
-    state: z.string().min(2, "Selecione um estado"),
-    city: z.string().min(2, "Cidade obrigatória"),
-    neighborhood: z.string().min(2, "Bairro obrigatório"),
-    password: z.string().min(6, "A senha deve ter pelo menos 6 caracteres"),
-    confirmPassword: z.string(),
-    schoolName: z.string().min(2, "Escola obrigatória"),
+      .min(1, "Campo obrigatório") // Impede vazio
+      .regex(/^\d{2}\/\d{2}\/\d{4}$/, "Data inválida (DD/MM/AAAA)"), // Exige formato brasileiro
+    state: z.string().min(2, "Selecione um estado"), // Estado deve ter no mínimo 2 caracteres (ex: SP)
+    city: z.string().min(2, "Cidade obrigatória"), // Cidade precisa ter ao menos 2 letras
+    neighborhood: z.string().min(2, "Bairro obrigatório"), // Bairro precisa ter ao menos 2 letras
+    password: z.string().min(6, "A senha deve ter pelo menos 6 caracteres"), // Senha precisa ter 6+ caracteres
+    confirmPassword: z.string(), // Confirmação da senha (validado com refine)
+    schoolName: z.string().min(2, "Escola obrigatória"), // Nome da escola
   })
+  // Verifica se as senhas coincidem
   .refine((data) => data.password === data.confirmPassword, {
     message: "As senhas não coincidem",
-    path: ["confirmPassword"],
+    path: ["confirmPassword"], // Aponta o erro para o campo confirmPassword
   })
+  // Verifica se os emails coincidem
   .refine((data) => data.email === data.confirmEmail, {
     message: "Os Emails não coincidem",
-    path: ["confirmEmail"],
+    path: ["confirmEmail"], // Aponta o erro para o campo confirmEmail
   });
 
+// ------------------------------
+// Lista de estados brasileiros
+// ------------------------------
 const brazilianStates = [
   { value: "AC", label: "Acre (AC)" },
   { value: "AL", label: "Alagoas (AL)" },
@@ -66,24 +82,35 @@ const brazilianStates = [
   { value: "TO", label: "Tocantins (TO)" },
 ];
 
+// ------------------------------
+// Componente principal: Formulário de Cadastro
+// ------------------------------
 const SignUpForm = () => {
+  // useForm inicializa o formulário com validação do Zod
   const {
-    register,
-    control,
-    handleSubmit,
-    formState: { errors },
+    register, // Registra campos simples (input, select)
+    control, // Necessário para campos controlados (ex: DateField com Controller)
+    handleSubmit, // Função para lidar com envio
+    formState: { errors }, // Objeto contendo erros de validação
   } = useForm({
-    resolver: zodResolver(schema),
-    defaultValues: { dateOfBirth: "" },
+    resolver: zodResolver(schema), // Integração com Zod
+    defaultValues: { dateOfBirth: "" }, // Valor inicial vazio para data
   });
+
+  // Função chamada quando o formulário é enviado com sucesso
   const onSubmit = (data) => {
-    console.log("Form submitted:", data); // Enviar a data pro backend, console.log só pra ver a data no desenvolvimento
+    console.log("Form submitted:", data); 
+    // Aqui você poderia enviar os dados para um backend via API
   };
 
+  // ------------------------------
+  // Renderização do formulário
+  // ------------------------------
   return (
     <form
-      className="flex flex-col mx-auto w-full max-w-3xl gap-4"
-      onSubmit={handleSubmit(onSubmit)}>
+      className="flex flex-col mx-auto w-full max-w-3xl gap-4" // Layout centralizado
+      onSubmit={handleSubmit(onSubmit)} // handleSubmit do react-hook-form
+    >
       {/* Nome Completo e Nome Social */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-16 w-full p-2">
         <FormField
@@ -124,7 +151,9 @@ const SignUpForm = () => {
 
       {/* Data de nascimento e Estado */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-16 w-full p-2">
+        {/* Campo controlado com Controller (DateField) */}
         <DateField control={control} errors={errors} />
+        {/* Select de estados brasileiros */}
         <SelectField
           id="state"
           label="Estado:"
@@ -152,7 +181,7 @@ const SignUpForm = () => {
         />
       </div>
 
-      {/* Senha e ConfirmaÃ§Ã£o */}
+      {/* Senha e Confirmação */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-16 w-full p-2">
         <FormField
           id="password"
@@ -184,13 +213,17 @@ const SignUpForm = () => {
       </div>
 
       {/* Botão */}
-      <div className="px-2">
-        <button className=" mb-4 w-full p-3  text-sm sm:text-base text-white font-semibold transition duration-200 hover:bg-green-700 bg-green-500 rounded-md">
-          Continuar
-        </button>
-      </div>
+      <NavLink to='/studentprofile'>
+        <div className="px-2">
+          <button className=" mb-4 w-full p-3  text-sm sm:text-base text-white font-semibold transition duration-200 hover:bg-green-700 bg-green-500 rounded-md">
+            Continuar
+          </button>
+        </div>
+      </NavLink>
+
     </form>
   );
 };
 
+// Exporta o formulário
 export default SignUpForm;
