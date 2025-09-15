@@ -26,7 +26,7 @@ const AdminProfile = () => {
   */
 
   return (
-    <section className="pt-28 w-full  mx-auto">
+    <section className="pt-28 w-full max-w-4xl mx-auto px-4">
       {/*
         Seção principal do perfil
         - pt-28: padding-top de 112px (para compensar navbar fixa)
@@ -52,11 +52,10 @@ const AdminProfile = () => {
             - flex items-center justify-center: centraliza conteúdo horizontal e vertical
           */}
 
-          <div className="absolute -bottom-4 left-12">
+          <div className="absolute left-12">
             {/*
               Container da foto de perfil
               - absolute: posição absoluta em relação ao pai
-              - -bottom-4: 16px acima do fundo do cabeçalho
               - left-12: 48px da esquerda
             */}
             <img
@@ -105,7 +104,7 @@ const AdminProfile = () => {
             - text-gray-600: cinza médio
           */}
 
-          <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4 text-left text-sm text-gray-700">
+          <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-6 text-left text-sm text-gray-700">
             {/*
               Grid com informações adicionais
               - mt-6: margem superior 24px
@@ -117,25 +116,27 @@ const AdminProfile = () => {
               - text-gray-700: cinza escuro
             */}
 
-            <div>
-              <span className="font-semibold">Data de Nascimento:</span> {birthDate}
-              {/*
-                Mostra a data de nascimento
-                - font-semibold: semi-negrito para o label
-              */}
+            <div className="bg-gray-50 p-4 rounded-lg">
+              <span className="font-semibold text-gray-800">Data de Nascimento:</span> {birthDate}
             </div>
 
-            <div>
-              <span className="font-semibold">Estado:</span> {state}
+            <div className="bg-gray-50 p-4 rounded-lg">
+              <span className="font-semibold text-gray-800">Estado:</span> {state}
             </div>
 
-            <div>
-              <span className="font-semibold">Cidade:</span> {city}
+            <div className="bg-gray-50 p-4 rounded-lg">
+              <span className="font-semibold text-gray-800">Cidade:</span> {city}
             </div>
 
-            <div>
-              <span className="font-semibold">Bairro:</span> {neighborhood}
+            <div className="bg-gray-50 p-4 rounded-lg">
+              <span className="font-semibold text-gray-800">Bairro:</span> {neighborhood}
             </div>
+          </div>
+
+          <div className="mt-8 flex justify-center">
+            <button className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition duration-200">
+              Editar Perfil
+            </button>
           </div>
         </div>
       </div>

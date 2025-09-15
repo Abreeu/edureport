@@ -190,6 +190,16 @@ const SignUpFormSchool = () => {
       {/* Botão de continuar */}
       <div className="px-2">
         <NavLink to="/schoolprofile">
+          {/* Exemplo comentado:
+            state={{
+              schoolName: watch('schoolName'),
+              schoolType: watch('schoolType'),
+              email: watch('email'),
+              state: watch('state'),
+              city: watch('city'),
+              neighborhood: watch('neighborhood'),
+            }}
+          */}
           <button
             className="mt-4 mb-8 w-full p-3 text-sm sm:text-base text-white font-semibold transition duration-200 hover:bg-green-700 bg-green-500 rounded-md"
           >

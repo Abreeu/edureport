@@ -17,11 +17,6 @@ const StudentProfile = () => {
 
   return (
     <section className="p-28 w-full max-w-4xl mx-auto px-4">
-      {/* Título da página */}
-      <h1 className="flex justify-center mb-8 text-blue-600 text-3xl font-bold">
-        Perfil do Aluno
-      </h1>
-
       {/* Card do perfil */}
       <div className="bg-white shadow-lg rounded-lg overflow-hidden">
         {/* Cabeçalho azul */}

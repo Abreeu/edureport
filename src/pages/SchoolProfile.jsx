@@ -1,31 +1,61 @@
+import { useLocation } from 'react-router-dom'
 
-// Componente funcional da página de perfil da escola
 const SchoolProfile = () => {
+  const { state: schoolData } = useLocation()
+
+  const {
+    schoolName,
+    schoolType,
+    email,
+    state,
+    city,
+    neighborhood,
+  } = schoolData || {}
+
   return (
-    <>
-      {/* Seção principal */}
-      <section className="pt-28 w-full max-w-3xl mx-auto">
-        {/*
-          - pt-28: padding top (espaço para a navbar fixa)
-          - w-full: ocupa 100% da largura disponível
-          - max-w-3xl: largura máxima de 3xl (limita a largura em telas grandes)
-          - mx-auto: centraliza horizontalmente
-        */}
+    <section className="pt-28 w-full max-w-4xl mx-auto px-4">
+      <div className="bg-white shadow-lg rounded-lg overflow-hidden">
+        <div className="bg-blue-600 h-40 relative flex items-center justify-center">
+          <div className="absolute left-12">
+            <img
+              src="/default-profile.png"
+              alt="Foto de perfil"
+              className="w-24 h-24 rounded-full border-4 border-white object-cover"
+            />
+          </div>
+        </div>
 
-        {/* Título da página */}
-        <h1 className="flex justify-center mb-6 text-blue-600 text-3xl font-bold">
-          Perfil da Escola
-        </h1>
-        {/*
-          - flex justify-center: centraliza horizontalmente
-          - mb-6: margin bottom
-          - text-blue-600: cor azul
-          - text-3xl: tamanho da fonte
-          - font-bold: negrito
-        */}
-      </section>
-    </>
+        <div className="pt-16 pb-8 px-6">
+          <h2 className="text-2xl font-bold text-gray-800">{schoolName}</h2>
+          <p className="mt-2 text-gray-600">{email}</p>
+
+          <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-6 text-left text-sm text-gray-700">
+            <div className="bg-gray-50 p-4 rounded-lg">
+              <span className="font-semibold text-gray-800">Tipo:</span> {schoolType}
+            </div>
+
+            <div className="bg-gray-50 p-4 rounded-lg">
+              <span className="font-semibold text-gray-800">Estado:</span> {state}
+            </div>
+
+            <div className="bg-gray-50 p-4 rounded-lg">
+              <span className="font-semibold text-gray-800">Cidade:</span> {city}
+            </div>
+
+            <div className="bg-gray-50 p-4 rounded-lg">
+              <span className="font-semibold text-gray-800">Bairro:</span> {neighborhood}
+            </div>
+          </div>
+
+          <div className="mt-8 flex justify-center">
+            <button className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition duration-200">
+              Editar Perfil
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
   )
-};
+}
 
-export default SchoolProfile;
+export default SchoolProfile
