@@ -1,7 +1,7 @@
 // Importa useForm do react-hook-form para controlar formulários
 import { useForm } from "react-hook-form";
 
-import { NavLink } from "react-router-dom"
+import { Navigate, useNavigate } from "react-router-dom";
 // Importa NavLink do react-router-dom para navegação entre páginas sem recarregar a página
 
 // Importa o zodResolver que integra o Zod com react-hook-form
@@ -96,10 +96,14 @@ const SignUpForm = () => {
     resolver: zodResolver(schema), // Integração com Zod
     defaultValues: { dateOfBirth: "" }, // Valor inicial vazio para data
   });
+  const navigate = useNavigate();
 
   // Função chamada quando o formulário é enviado com sucesso
   const onSubmit = (data) => {
-    console.log("Form submitted:", data); 
+    console.log("Form submitted:", data);
+
+    navigate("/studentprofile");
+
     // Aqui você poderia enviar os dados para um backend via API
   };
 
@@ -213,14 +217,12 @@ const SignUpForm = () => {
       </div>
 
       {/* Botão */}
-      <NavLink to='/studentprofile'>
-        <div className="px-2">
-          <button className=" mb-4 w-full p-3  text-sm sm:text-base text-white font-semibold transition duration-200 hover:bg-green-700 bg-green-500 rounded-md">
-            Continuar
-          </button>
-        </div>
-      </NavLink>
 
+      <div className="px-2">
+        <button className=" mb-4 w-full p-3  text-sm sm:text-base text-white font-semibold transition duration-200 hover:bg-green-700 bg-green-500 rounded-md">
+          Continuar
+        </button>
+      </div>
     </form>
   );
 };

@@ -2,7 +2,7 @@
 import React from "react";
 
 // Importa o NavLink para navegação (react-router-dom)
-import { NavLink } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 
 // Importa hooks e utilitários do react-hook-form
 import { useForm } from "react-hook-form";
@@ -92,11 +92,13 @@ const SignUpForm = () => {
     resolver: zodResolver(schema), // Usa o zod para validar o form
     defaultValues: { dateOfBirth: "" }, // Valor inicial vazio para data
   });
+  const navigate = useNavigate();
 
   // Função chamada ao submeter o formulário
   const onSubmit = (data) => {
-    console.log("Form submitted:", data); 
+    console.log("Form submitted:", data);
     // Aqui é onde você faria a chamada ao backend
+    navigate("/adminprofile");
   };
 
   return (
@@ -197,9 +199,8 @@ const SignUpForm = () => {
 
       {/* Botão de continuar */}
       <div className="px-2">
-        <NavLink to='/adminprofile'>
-          {/* Poderia enviar os dados pelo state do NavLink */}
-          {/* Exemplo comentado:
+        {/* Poderia enviar os dados pelo state do NavLink */}
+        {/* Exemplo comentado:
             state={{
               fullName: watch('fullName'),
               socialName: watch('socialName'),
@@ -210,12 +211,9 @@ const SignUpForm = () => {
               neighborhood: watch('neighborhood'),
             }}
           */}
-          <button
-            className="mt-4 mb-8 w-full p-3 text-sm sm:text-base text-white font-semibold transition duration-200 hover:bg-green-700 bg-green-500 rounded-md"
-          >
-            Continuar
-          </button>
-        </NavLink>
+        <button className="mt-4 mb-8 w-full p-3 text-sm sm:text-base text-white font-semibold transition duration-200 hover:bg-green-700 bg-green-500 rounded-md">
+          Continuar
+        </button>
       </div>
     </form>
   );
