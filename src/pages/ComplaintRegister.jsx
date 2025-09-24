@@ -129,9 +129,13 @@ const ComplaintRegister = () => {
                   menu: (base) => ({
                     ...base,
                     maxHeight: 220,
-                    overflowY: "auto",
+                    overflowY: "hidden",
                   }),
-                  menuPortal: (base) => ({ ...base, zIndex: 9999 }),
+                  menuPortal: (base) => ({
+                    ...base,
+                    zIndex: 9999,
+                    overflow: "visible",
+                  }),
                 }}
               />
             </div>
@@ -159,9 +163,13 @@ const ComplaintRegister = () => {
                   menu: (base) => ({
                     ...base,
                     maxHeight: 220,
-                    overflowY: "auto",
+                    overflowY: "hidden",
                   }),
-                  menuPortal: (base) => ({ ...base, zIndex: 9999 }),
+                  menuPortal: (base) => ({
+                    ...base,
+                    zIndex: 9999,
+                    overflow: "visible",
+                  }),
                 }}
               />
             </div>
