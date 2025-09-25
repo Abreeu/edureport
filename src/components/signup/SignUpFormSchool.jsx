@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom"; // Usado para criar links de navegação entre rotas no React Router
+import { useNavigate } from "react-router-dom"; // Usado para criar links de navegação entre rotas no React Router
 import { useForm } from "react-hook-form"; // Biblioteca para lidar com formulários de forma reativa
 import { zodResolver } from "@hookform/resolvers/zod"; // Faz a ponte entre o React Hook Form e o Zod (para validação de schema)
 import { z } from "zod"; // Biblioteca de validação de dados
@@ -88,11 +88,13 @@ const SignUpFormSchool = () => {
   } = useForm({
     resolver: zodResolver(schema), // conecta o formulário ao schema do Zod
   });
+  const navigate = useNavigate();
 
   // Função que será chamada quando o form for enviado sem erros
   const onSubmit = (data) => {
-    console.log("Form submitted:", data); 
+    console.log("Form submitted:", data);
     // 🚀 Aqui você poderia enviar os dados para o backend
+    navigate("/schoolprofile");
   };
 
   return (
@@ -189,8 +191,7 @@ const SignUpFormSchool = () => {
 
       {/* Botão de continuar */}
       <div className="px-2">
-        <NavLink to="/schoolprofile">
-          {/* Exemplo comentado:
+        {/* Exemplo comentado:
             state={{
               schoolName: watch('schoolName'),
               schoolType: watch('schoolType'),
@@ -200,12 +201,9 @@ const SignUpFormSchool = () => {
               neighborhood: watch('neighborhood'),
             }}
           */}
-          <button
-            className="mt-4 mb-8 w-full p-3 text-sm sm:text-base text-white font-semibold transition duration-200 hover:bg-green-700 bg-green-500 rounded-md"
-          >
-            Continuar
-          </button>
-        </NavLink>
+        <button className="mt-4 mb-8 w-full p-3 text-sm sm:text-base text-white font-semibold transition duration-200 hover:bg-green-700 bg-green-500 rounded-md">
+          Continuar
+        </button>
       </div>
     </form>
   );
