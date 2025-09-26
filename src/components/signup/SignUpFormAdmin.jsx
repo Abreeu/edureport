@@ -2,7 +2,7 @@
 import React from "react";
 
 // Importa o NavLink para navegação (react-router-dom)
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 // Importa hooks e utilitários do react-hook-form
 import { useForm } from "react-hook-form";
@@ -211,9 +211,11 @@ const SignUpForm = () => {
               neighborhood: watch('neighborhood'),
             }}
           */}
-        <button className="mt-4 mb-8 w-full p-3 text-sm sm:text-base text-white font-semibold transition duration-200 hover:bg-green-700 bg-green-500 rounded-md">
-          Continuar
-        </button>
+        <NavLink to="/admincontrolpanel">
+          <button className="mt-4 mb-8 w-full p-3 text-sm sm:text-base text-white font-semibold transition duration-200 hover:bg-green-700 bg-green-500 rounded-md">
+            Continuar
+          </button>
+        </NavLink>
       </div>
     </form>
   );

@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 
 const StudentProfile = () => {
   // Recebe os dados do aluno via estado da rota
@@ -61,10 +61,15 @@ const StudentProfile = () => {
           </div>
 
           {/* Botão para editar perfil */}
-          <div className="mt-8 flex justify-center">
+          <div className="mt-8 flex justify-center space-x-6">
             <button className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition duration-200">
               Editar Perfil
             </button>
+            <NavLink to="/studentcontrolpanel">
+              <button className="px-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-blue-600 transition duration-200">
+                Voltar ao Painel
+              </button>
+            </NavLink>
           </div>
         </div>
       </div>

@@ -1,4 +1,5 @@
 import { useLocation } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 // Importa useLocation do react-router-dom para acessar dados passados via navegação (state)
 
 const AdminProfile = () => {
@@ -133,10 +134,15 @@ const AdminProfile = () => {
             </div>
           </div>
 
-          <div className="mt-8 flex justify-center">
+          <div className="mt-8 flex justify-center space-x-6">
             <button className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition duration-200">
               Editar Perfil
             </button>
+            <NavLink to="/admincontrolpanel">
+              <button className="px-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-blue-600 transition duration-200">
+                Voltar ao Painel
+              </button>
+            </NavLink>
           </div>
         </div>
       </div>

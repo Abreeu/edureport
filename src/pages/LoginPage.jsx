@@ -118,7 +118,7 @@ const LoginPage = () => {
           </button>
 
           {/* Link para cadastro */}
-          <p className="text-xs text-center mt-5">
+          <p className="text-sm text-center mt-5">
             Não tem uma conta? <NavLink to="/signup"><a href="#" className="text-blue-600 hover:underline">Cadastre-se aqui</a></NavLink>
           </p>
         </div>
