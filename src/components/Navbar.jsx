@@ -89,7 +89,7 @@ const Navbar = () => {
           - hover:bg-blue-50: fundo azul claro ao passar o mouse
         */}
 
-        <NavLink to="signup">
+        <NavLink to="/signup">
           <button className="bg-blue-600 text-white font-semibold py-2 px-4 rounded-full shadow hover:bg-blue-700 transition duration-300 cursor-pointer">
             Criar Conta
           </button>
