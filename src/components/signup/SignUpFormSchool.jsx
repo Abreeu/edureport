@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom"; // Usado para criar links de navegação entre rotas no React Router
+import { NavLink, useNavigate } from "react-router-dom"; // Usado para criar links de navegação entre rotas no React Router
 import { useForm } from "react-hook-form"; // Biblioteca para lidar com formulários de forma reativa
 import { zodResolver } from "@hookform/resolvers/zod"; // Faz a ponte entre o React Hook Form e o Zod (para validação de schema)
 import { z } from "zod"; // Biblioteca de validação de dados
@@ -201,9 +201,11 @@ const SignUpFormSchool = () => {
               neighborhood: watch('neighborhood'),
             }}
           */}
-        <button className="mt-4 mb-8 w-full p-3 text-sm sm:text-base text-white font-semibold transition duration-200 hover:bg-green-700 bg-green-500 rounded-md">
-          Continuar
-        </button>
+        <NavLink to="/schoolcontrolpanel">
+          <button className="mt-4 mb-8 w-full p-3 text-sm sm:text-base text-white font-semibold transition duration-200 hover:bg-green-700 bg-green-500 rounded-md">
+            Continuar
+          </button>
+        </NavLink>
       </div>
     </form>
   );

@@ -13,6 +13,10 @@ import SchoolProfile from "./pages/SchoolProfile.jsx";
 import StudentProfile from "./pages/StudentProfile.jsx";
 import ComplaintRegister from "./pages/ComplaintRegister.jsx";
 
+import AdminControlPainel from "./pages/AdminControlPanel.jsx";
+import SchoolControlPanel from "./pages/SchoolControlPanel.jsx";
+import StudentControlPanel from "./pages/StudentControlPanel.jsx";
+
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 const App = () => {
@@ -32,7 +36,11 @@ const App = () => {
           <Route path="/adminprofile" element={<AdminProfile />} />
           <Route path="/schoolprofile" element={<SchoolProfile />} />
           <Route path="/studentprofile" element={<StudentProfile />} />
-          <Route path="complaintregister" element={<ComplaintRegister />} />
+          <Route path="/complaintregister" element={<ComplaintRegister />} />
+
+          <Route path="/admincontrolpanel" element={<AdminControlPainel />} />
+          <Route path="/schoolcontrolpanel" element={<SchoolControlPanel />} />
+          <Route path="/studentcontrolpanel" element={<StudentControlPanel />} />
         </Routes>
       </Router>
     </>
