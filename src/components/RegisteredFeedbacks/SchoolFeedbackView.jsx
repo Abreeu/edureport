@@ -1,5 +1,15 @@
 // src/components/RegisteredFeedbacks/SchoolFeedbackView.jsx
 import EmptyState from "../commom/EmptyState";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  Cell,
+} from "recharts";
 
 const SchoolFeedbackView = ({ schoolFeedback }) => {
   if (!schoolFeedback || !schoolFeedback.school) {
@@ -31,17 +41,45 @@ const SchoolFeedbackView = ({ schoolFeedback }) => {
       (sum, tag) => sum + (tag.usageCount || 0),
       0
     ) || 0;
+  const positiveData =
+    schoolFeedback.positiveTags
+      ?.map((tag) => ({
+        name: tag.tagName,
+        count: tag.usageCount || 0,
+      }))
+      .sort((a, b) => b.count - a.count) || [];
   const negativeCount =
     schoolFeedback.negativeTags?.reduce(
       (sum, tag) => sum + (tag.usageCount || 0),
       0
     ) || 0;
+  const negativeData =
+    schoolFeedback.negativeTags
+      ?.map((tag) => ({
+        name: tag.tagName,
+        count: tag.usageCount || 0,
+      }))
+      .sort((a, b) => b.count - a.count) || [];
   const uniqueStudentCount = schoolFeedback.uniqueStudentCount || 0;
   const totalStudentCount = schoolFeedback.totalStudentCount || 0;
   const participationRate =
     totalStudentCount > 0
       ? Math.round((uniqueStudentCount / totalStudentCount) * 100)
       : 0;
+
+  const CustomTooltip = ({ active, payload }) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="bg-white border border-gray-300 rounded-lg shadow-lg p-3">
+          <p className="font-semibold text-gray-800">
+            {payload[0].payload.name}
+          </p>
+          <p className="text-sm text-gray-600">{payload[0].value} feedbacks</p>
+        </div>
+      );
+    }
+    return null;
+  };
 
   return (
     <div className="space-y-6">
@@ -98,25 +136,36 @@ const SchoolFeedbackView = ({ schoolFeedback }) => {
             <span className="mr-2">✅</span>
             Pontos Positivos
           </h3>
-          <div className="flex flex-wrap gap-2">
-            {schoolFeedback.positiveTags &&
-            schoolFeedback.positiveTags.length > 0 ? (
-              schoolFeedback.positiveTags.map((tag) => (
-                <span
-                  key={tag.tagId}
-                  className="inline-flex items-center gap-1 px-3 py-2 bg-green-100 text-green-800 border border-green-300 rounded-full text-sm font-medium">
-                  {tag.tagName}
-                  <span className="bg-green-200 text-green-800 px-2 py-1 rounded-full text-xs">
-                    {tag.usageCount}
-                  </span>
-                </span>
-              ))
-            ) : (
-              <p className="text-gray-500 text-sm">
-                Nenhum ponto positivo cadastrado
-              </p>
-            )}
-          </div>
+          {positiveData.length > 0 ? (
+            <ResponsiveContainer
+              width="100%"
+              height={Math.max(250, positiveData.length * 40)}>
+              <BarChart
+                data={positiveData}
+                layout="vertical"
+                margin={{ top: 5, right: 30, left: 10, bottom: 5 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#d1fae5" />
+                <XAxis type="number" stroke="#15803d" />
+                <YAxis
+                  type="category"
+                  dataKey="name"
+                  width={120}
+                  stroke="#15803d"
+                  tick={{ fontSize: 13 }}
+                />
+                <Tooltip content={<CustomTooltip />} />
+                <Bar dataKey="count" radius={[0, 8, 8, 0]}>
+                  {positiveData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill="#22c55e" />
+                  ))}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          ) : (
+            <p className="text-gray-500 text-sm text-center py-8">
+              Nenhum ponto positivo cadastrado
+            </p>
+          )}
         </div>
 
         {/* Negative Tags */}
@@ -125,25 +174,36 @@ const SchoolFeedbackView = ({ schoolFeedback }) => {
             <span className="mr-2">❌</span>
             Pontos a Melhorar
           </h3>
-          <div className="flex flex-wrap gap-2">
-            {schoolFeedback.negativeTags &&
-            schoolFeedback.negativeTags.length > 0 ? (
-              schoolFeedback.negativeTags.map((tag) => (
-                <span
-                  key={tag.tagId}
-                  className="inline-flex items-center gap-1 px-3 py-2 bg-red-100 text-red-800 border border-red-300 rounded-full text-sm font-medium">
-                  {tag.tagName}
-                  <span className="bg-red-200 text-red-800 px-2 py-1 rounded-full text-xs">
-                    {tag.usageCount}
-                  </span>
-                </span>
-              ))
-            ) : (
-              <p className="text-gray-500 text-sm">
-                Nenhum ponto negativo cadastrado
-              </p>
-            )}
-          </div>
+          {negativeData.length > 0 ? (
+            <ResponsiveContainer
+              width="100%"
+              height={Math.max(250, negativeData.length * 40)}>
+              <BarChart
+                data={negativeData}
+                layout="vertical"
+                margin={{ top: 5, right: 30, left: 10, bottom: 5 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#fecaca" />
+                <XAxis type="number" stroke="#991b1b" />
+                <YAxis
+                  type="category"
+                  dataKey="name"
+                  width={120}
+                  stroke="#991b1b"
+                  tick={{ fontSize: 13 }}
+                />
+                <Tooltip content={<CustomTooltip />} />
+                <Bar dataKey="count" radius={[0, 8, 8, 0]}>
+                  {negativeData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill="#ef4444" />
+                  ))}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          ) : (
+            <p className="text-gray-500 text-sm text-center py-8">
+              Nenhum ponto negativo cadastrado
+            </p>
+          )}
         </div>
       </div>
     </div>
